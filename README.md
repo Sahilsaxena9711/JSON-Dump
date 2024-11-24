@@ -1,3 +1,8 @@
+# JSON-Dump
+
+An application that enables developers to create dummy/mock API with JSON.
+For Demo visit [`https://jsondumps.devsahil.in`](https://jsondumps.devsahil.in)
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
