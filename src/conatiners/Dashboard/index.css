@@ -1,0 +1,93 @@
+.dashboard {
+  padding: 8rem 5rem;
+  width: calc(100% - 10rem);
+}
+
+.apis {
+  height: 60vh;
+  display: flex;
+  margin-top: 2rem;
+  flex-direction: row;
+}
+
+.apiList {
+  width: calc(20% - 2rem);
+  padding: 0 0.5rem;
+  margin: 0 1rem 0 0;
+  border: 0.02rem solid var(--border);
+  border-radius: 0.5rem;
+}
+
+.apiData {
+  width: 80%;
+}
+
+.input {
+  width: calc(90%);
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  font-size: 1.2rem;
+  border: 0.02rem solid var(--border);
+  outline-color: var(--lightRed);
+}
+
+textarea {
+  width: calc(100% - 1rem);
+  margin-top: 0.5rem;
+  height: 90%;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  font-size: 1.2rem;
+  border: 0.02rem solid var(--border);
+  outline-color: var(--lightRed);
+}
+
+.nodata {
+  color: var(--lightDark);
+  margin-top: 2rem;
+}
+
+.iconPlus {
+  color: var(--red);
+}
+
+.iconSend {
+  color: var(--red);
+  font-size: 2rem;
+  transition: color 0.3s linear;
+}
+
+.mt10 {
+  margin-top: 1rem;
+}
+
+.mt5 {
+  margin-top: 0.5rem;
+}
+
+.apiItem:hover {
+  background-color: var(--lightRed);
+}
+
+.cta:hover {
+  background-color: var(--red);
+}
+
+.cta:hover > span {
+  color: var(--lessWhite);
+}
+
+.cta {
+  background-color: var(--lessWhite);
+  border-radius: 0.5rem;
+  width: calc(10% - 2rem);
+  /* padding: 0.5rem; */
+  outline: none;
+  border: 0.02rem solid var(--red);
+  transition: background-color 0.3s linear;
+}
+
+.selected {
+  background-color: var(--lightRed);
+  font-weight: 500;
+}

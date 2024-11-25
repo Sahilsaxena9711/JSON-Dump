@@ -1,17 +1,40 @@
 import { useEffect, useState } from "react";
-import logo from "./logo.svg";
-import "./App.css";
+
 import firebaseConfig from "./firebase.json";
 import { initializeApp } from "firebase/app";
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
-import { collection, getFirestore } from "firebase/firestore";
+import { getFirestore } from "firebase/firestore";
 import { doc, setDoc, getDoc, getDocs } from "firebase/firestore";
+import { getDatabase } from "firebase/database";
+
+import "./App.css";
+
+import Header from "./components/Header";
+import Footer from "./components/Footer";
+import Home from "./conatiners/Home";
+import Dashboard from "./conatiners/Dashboard";
+import Loading from "./conatiners/Loading";
 
 function App() {
-  const [authData, setAuthData] = useState({});
-
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
+  const rdb = getDatabase();
+
+  const [authData, setAuthData] = useState({});
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const user = sessionStorage.getItem("@user");
+    if (user) {
+      setAuthData(JSON.parse(user));
+    }
+    setLoading(false);
+  }, []);
+
+  const onLogout = async () => {
+    setAuthData({});
+    sessionStorage.setItem("@user", null);
+  };
 
   const onSingIn = async () => {
     const provider = new GoogleAuthProvider();
@@ -19,81 +42,40 @@ function App() {
     try {
       const data = await signInWithPopup(auth, provider);
       if (data?.user?.uid) {
-        console.log(data, data.user);
         let obj = {
           uid: data?.user?.uid,
           email: data?.user?.email,
           displayName: data?.user?.displayName,
         };
         setAuthData(obj);
-        const user = await setDoc(doc(db, "users", data?.user?.uid), obj);
-        console.log(user);
+        sessionStorage.setItem("@user", JSON.stringify(obj));
+        await setDoc(doc(db, "users", data?.user?.uid), obj);
       }
     } catch (e) {
       console.log(e.code, e.message);
     }
-
-    // signInWithPopup(auth, provider)
-    //   .then((result) => {
-    //     // This gives you a Google Access Token. You can use it to access the Google API.
-    //     const credential = GoogleAuthProvider.credentialFromResult(result);
-    //     const token = credential.accessToken;
-    //     // The signed-in user info.
-    //     const user = result.user;
-    //     console.log(user, user.uid, "success");
-
-    //     // IdP data available using getAdditionalUserInfo(result)
-    //     // ...
-    //   })
-    //   .catch((error) => {
-    //     // Handle Errors here.
-    //     const errorCode = error.code;
-    //     const errorMessage = error.message;
-    //     // The email of the user's account used.
-    //     const email = error.customData.email;
-    //     // The AuthCredential type that was used.
-    //     const credential = GoogleAuthProvider.credentialFromError(error);
-    //     // ...
-    //     console.log(error, errorCode, errorMessage, email, credential, "error");
-    //   });
   };
 
-  const onCreateProject = async () => {
-    try {
-      console.log(authData);
-      const project = await setDoc(
-        doc(db, "users", authData?.uid, "projects", "newproj"),
-        {
-          id: 123,
-        }
-      );
-      const u = await getDocs(
-        collection(db, "users", authData?.uid, "projects")
-      );
-      console.log(u);
-    } catch (e) {
-      console.log(e, e.message);
+  const renderAuthEnticUser = () => {
+    if (loading) {
+      return <Loading />;
+    } else if (!authData?.uid) {
+      return <Home onSingIn={onSingIn} />;
+    } else {
+      return <Dashboard rdb={rdb} authData={authData} db={db} />;
     }
   };
 
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-      <button onClick={onSingIn}>Goolgle eLogin</button>
-      <button onClick={onCreateProject}>Create Project</button>
+      <Header
+        onLogout={onLogout}
+        onSingIn={onSingIn}
+        authData={authData}
+        loading={loading}
+      />
+      {renderAuthEnticUser()}
+      <Footer />
     </div>
   );
 }

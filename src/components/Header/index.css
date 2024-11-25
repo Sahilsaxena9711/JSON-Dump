@@ -1,0 +1,21 @@
+header {
+  padding: 1.4rem 5rem;
+  border-bottom: 0.01rem solid var(--border);
+  position: fixed;
+  display: flex;
+  width: calc(100% - 10rem);
+  background-color: var(--lessWhite);
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  font-size: 1.6rem;
+  color: var(--black);
+  font-weight: 400;
+}
+
+.redText {
+  color: var(--red);
+}
