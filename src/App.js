@@ -7,8 +7,6 @@ import { getFirestore } from "firebase/firestore";
 import { doc, setDoc, getDoc, getDocs } from "firebase/firestore";
 import { getDatabase } from "firebase/database";
 
-import "./App.css";
-
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Home from "./conatiners/Home";
