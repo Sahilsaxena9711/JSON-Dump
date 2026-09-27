@@ -1,0 +1,10 @@
+{
+  apiKey: "AIzaSyA4tdE9O1R5g52P8AmHo5xJFZIiM9u9Vmo",
+  authDomain: "json-dump-fd6aa.firebaseapp.com",
+  databaseURL: "https://json-dump-fd6aa-default-rtdb.firebaseio.com",
+  projectId: "json-dump-fd6aa",
+  storageBucket: "json-dump-fd6aa.firebasestorage.app",
+  messagingSenderId: "957247458666",
+  appId: "1:957247458666:web:eab850adef7c813523e913",
+  measurementId: "G-WH9DEV59W1"
+}
